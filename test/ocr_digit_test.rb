@@ -22,11 +22,20 @@ describe OcrDigit do
     assert_equal '?', OcrDigit.new(ocr_unknown).digit_string
   end
 
+  it 'should pad strings with spaces when too short' do
+    ocr = [
+      ' _',
+      '  |',
+      '  |'
+    ]
+    assert_equal '7', OcrDigit.new(ocr).digit_string
+  end
+
   it 'should raise when given incorrect sized input' do
     bad_ocr = [
       '   ',
       '  |',
-      ' |'
+      ' | |'
     ]
     assert_raises StandardError do
       OcrDigit.new(bad_ocr)

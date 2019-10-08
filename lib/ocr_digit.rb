@@ -8,10 +8,12 @@ class OcrDigit
   def initialize(ocr)
     raise 'Expecting array of 3 strings of length 3' if bad_ocr_shape(ocr)
 
-    @digit_string = self.class.ocr_lookup[ocr] || '?'
+    padded_ocr = pad_ocr(ocr)
+    @digit_string = self.class.ocr_lookup[padded_ocr] || '?'
   end
 
   private
+
 
   def bad_ocr_shape(ocr)
     return true unless ocr.is_a?(Array)
@@ -19,9 +21,13 @@ class OcrDigit
 
     ocr.each do |str|
       return true unless str.is_a?(String)
-      return true unless str.length == 3
+      return true unless str.length <= 3
     end
     false
+  end
+
+  def pad_ocr(ocr)
+    ocr.map { |str| str.ljust(3) }
   end
 
   class << self
