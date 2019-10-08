@@ -6,7 +6,7 @@ class OcrDigit
   attr_reader :digit_string
 
   def initialize(ocr)
-    raise 'Expecting array of 3 strings of length 3' if bad_ocr_shape(ocr)
+    raise "Expecting 3x3 Array of Strings (got #{ocr})" if bad_ocr_shape(ocr)
 
     padded_ocr = pad_ocr(ocr)
     @digit_string = self.class.ocr_lookup[padded_ocr] || '?'
@@ -14,14 +14,13 @@ class OcrDigit
 
   private
 
-
   def bad_ocr_shape(ocr)
     return true unless ocr.is_a?(Array)
     return true unless ocr.size == 3
 
     ocr.each do |str|
       return true unless str.is_a?(String)
-      return true unless str.length <= 3
+      return true unless [3, 2].include?(str.length)
     end
     false
   end
@@ -38,9 +37,11 @@ class OcrDigit
     def build_ocr_lookup
       reference_string_lines = ocr_reference_string.split("\n")
       lookup_hash = {}
-      (0..10).map do |int|
+      (0..9).map do |int|
         lookup_hash[
-          reference_string_lines.map { |line| line[(3 * int)..(3 * int + 2)] }
+          reference_string_lines.map do |line|
+            line[(3 * int)..(3 * int + 2)].ljust(3)
+          end
         ] = int.to_s
       end
       lookup_hash

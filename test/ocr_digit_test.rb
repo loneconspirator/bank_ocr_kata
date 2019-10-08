@@ -22,6 +22,15 @@ describe OcrDigit do
     assert_equal '?', OcrDigit.new(ocr_unknown).digit_string
   end
 
+  it 'should pad strings with spaces when too short (9)' do
+    ocr = [
+      ' _',
+      '|_|',
+      ' _|'
+    ]
+    assert_equal '9', OcrDigit.new(ocr).digit_string
+  end
+
   it 'should pad strings with spaces when too short' do
     ocr = [
       ' _',
