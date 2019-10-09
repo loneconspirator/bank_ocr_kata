@@ -5,20 +5,31 @@ require_relative 'ocr_digit'
 # Processes a line of OCR digits represented as an array of three strings
 # (the input lines)
 class OcrDigitLine
-  attr_reader :digit_line, :valid
+  attr_reader :digit_line, :valid, :status
 
   def initialize(lines)
     raise if bad_ocr_shape(lines)
 
     @digit_line = interpret_line(lines)
-    @valid = self.class.valid?(@digit_line)
+    @valid = !self.class.illegible?(@digit_line) &&
+             self.class.valid?(@digit_line)
+    @status = self.class.status(@digit_line)
   end
 
   class << self
     def valid?(digit_string)
-      return false if digit_string.include?('?')
-
       perform_checksum(digit_string)
+    end
+
+    def illegible?(digit_string)
+      digit_string.include?('?')
+    end
+
+    def status(digit_string)
+      return 'ILL' if illegible?(digit_string)
+      return 'ERR' unless valid?(digit_string)
+
+      ''
     end
   end
 
