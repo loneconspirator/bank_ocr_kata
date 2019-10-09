@@ -22,4 +22,12 @@ describe OcrDigitLine do
       OcrDigitLine.new(bad_ocr)
     end
   end
+
+  it 'validates a good digit string' do
+    assert OcrDigitLine.valid?('123456789')
+  end
+
+  it 'fails an invalid string' do
+    assert_equal false, OcrDigitLine.valid?('664371495')
+  end
 end

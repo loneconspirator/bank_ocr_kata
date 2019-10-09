@@ -5,12 +5,21 @@ require_relative 'ocr_digit'
 # Processes a line of OCR digits represented as an array of three strings
 # (the input lines)
 class OcrDigitLine
-  attr_reader :digit_line
+  attr_reader :digit_line, :valid
 
   def initialize(lines)
     raise if bad_ocr_shape(lines)
 
     @digit_line = interpret_line(lines)
+    @valid = self.class.valid?(@digit_line)
+  end
+
+  class << self
+    def valid?(digit_string)
+      return false if digit_string.include?('?')
+
+      perform_checksum(digit_string)
+    end
   end
 
   private
@@ -32,6 +41,14 @@ class OcrDigitLine
   def split_ocr_lines(ocr_lines)
     (0..8).map do |pos|
       ocr_lines.map { |line| line[(pos * 3)..(pos * 3 + 2)] }
+    end
+  end
+
+  class << self
+    def perform_checksum(digit_string)
+      ints = digit_string.split('').map(&:to_i)
+      sum = (0...9).map { |i| ints[i] * (9 - i) }.sum
+      (sum % 11).zero?
     end
   end
 end
