@@ -29,6 +29,7 @@ describe OcrDigitLineAlternatives do
   end
 
   it 'returns expected alternatives for ?9086717?' do
+    skip
     ocr = [
       ' _  _  _  _  _  _     _  _ ',
       '|_||_|| ||_||_   |  |  | _ ',
