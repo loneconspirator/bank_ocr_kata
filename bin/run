@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/ocr_stream_reader'
+require_relative '../lib/ocr_digit_line'
+
+OcrStreamReader.new($stdin).input_lines.each do |input_line|
+  $stdout.puts OcrDigitLine.new(input_line).output_line
+end
