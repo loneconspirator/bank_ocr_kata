@@ -28,10 +28,9 @@ describe OcrDigitLineAlternatives do
                  alts_obj.alternatives.sort
   end
 
-  it 'returns expected alternatives for ?9086717?' do
-    skip
+  it 'returns expected alternatives for 49086717?' do
     ocr = [
-      ' _  _  _  _  _  _     _  _ ',
+      '    _  _  _  _  _  _     _ ',
       '|_||_|| ||_||_   |  |  | _ ',
       '  | _||_||_||_|  |  |  | _|'
     ]
