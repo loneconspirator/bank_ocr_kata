@@ -22,5 +22,11 @@ Pipe files into the run script and results will be written to stdout
 cat test_file.txt | bin/run
 ```
 
+To run the system as it is before User Story 4, where no attempt to correct the input is made, include `NO_CORRECT` in the environment.
+
+```
+cat test_file.txt | NO_CORRECT=1 bin/run
+```
+
 ## Tests
 Tests can be run with `guard`
