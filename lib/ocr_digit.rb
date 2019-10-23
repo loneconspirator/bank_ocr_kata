@@ -3,13 +3,13 @@
 # OcrDigit is initialized with array of four strings of length 3 to
 # determine what digit was OCR'd
 class OcrDigit
-  attr_reader :digit_string
+  attr_reader :digit_string, :digit_scan
 
   def initialize(ocr)
     raise "Expecting 3x3 Array of Strings (got #{ocr})" if bad_ocr_shape(ocr)
 
-    padded_ocr = pad_ocr(ocr)
-    @digit_string = self.class.ocr_lookup[padded_ocr] || '?'
+    @digit_scan = pad_ocr(ocr)
+    @digit_string = self.class.ocr_lookup[digit_scan] || '?'
   end
 
   private
