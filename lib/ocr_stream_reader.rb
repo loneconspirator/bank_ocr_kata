@@ -9,14 +9,18 @@ class OcrStreamReader
     @input_lines = (0..(all_lines.size / 4)).map do |ocr_line_pos|
       file_pos = ocr_line_pos * 4
       [
-        remove_trailing_newline(all_lines[file_pos]).ljust(27, ' '),
-        remove_trailing_newline(all_lines[file_pos + 1]),
-        remove_trailing_newline(all_lines[file_pos + 2])
+        cleanup_line(all_lines[file_pos]),
+        cleanup_line(all_lines[file_pos + 1]),
+        cleanup_line(all_lines[file_pos + 2])
       ]
     end
   end
 
   private
+
+  def cleanup_line(str)
+    remove_trailing_newline(str).ljust(27, ' ')
+  end
 
   def remove_trailing_newline(str)
     return str unless str[-1] == "\n"
