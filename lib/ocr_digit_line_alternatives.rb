@@ -17,15 +17,11 @@ class OcrDigitLineAlternatives
 
   def options_swapping(position, digit_scans)
     original = digit_scans.map(&:digit_string)
-    begin
-      OcrDigitAlternatives.new(digit_scans[position].digit_scan)
-                          .alternatives.map do |alt|
-        original[position] = alt
-        test_line = original.join('')
-        line_if_good(test_line)
-      end
-    rescue StandardError => e
-      # binding.pry
+    OcrDigitAlternatives.new(digit_scans[position].digit_scan)
+      .alternatives.map do |alt|
+      original[position] = alt
+      test_line = original.join('')
+      line_if_good(test_line)
     end
   end
 
