@@ -18,4 +18,11 @@ describe OcrDigitAlternatives do
                                     ' _|'])
     assert_equal(%w[3 5 8], oda.alternatives)
   end
+
+  it 'should give expected results for ?' do
+    oda = OcrDigitAlternatives.new(['   ',
+                                    '|_|',
+                                    ' _|'])
+    assert_equal(%w[4 9], oda.alternatives)
+  end
 end
