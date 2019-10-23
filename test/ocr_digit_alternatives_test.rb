@@ -16,13 +16,13 @@ describe OcrDigitAlternatives do
     oda = OcrDigitAlternatives.new([' _ ',
                                     '|_|',
                                     ' _|'])
-    assert_equal(%w[3 5 8], oda.alternatives)
+    assert_equal(%w[3 5 8].sort, oda.alternatives.sort)
   end
 
   it 'should give expected results for ?' do
     oda = OcrDigitAlternatives.new(['   ',
                                     '|_|',
                                     ' _|'])
-    assert_equal(%w[4 9], oda.alternatives)
+    assert_equal(%w[4 9].sort, oda.alternatives.sort)
   end
 end
