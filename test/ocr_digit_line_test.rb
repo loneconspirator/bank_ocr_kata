@@ -13,6 +13,7 @@ describe OcrDigitLine do
     digit_line_obj = OcrDigitLine.new(ocr)
     assert_equal '123456789', digit_line_obj.digit_line
     assert_equal '', digit_line_obj.status
+    assert_equal '123456789', digit_line_obj.output_line
   end
 
   it 'raises error on poorly shaped input' do
@@ -39,5 +40,15 @@ describe OcrDigitLine do
 
   it 'fails an invalid string' do
     assert_equal 'ILL', OcrDigitLine.status('6643?1495')
+  end
+
+  it 'writes the correct output line' do
+    ocr = [
+      '    _  _     _  _  _  _  _',
+      '  | _| _||_||_ |_   ||_||_|',
+      '  ||_  _|  | _||_|  ||_||_|'
+    ]
+    digit_line_obj = OcrDigitLine.new(ocr)
+    assert_equal '123456788 ERR', digit_line_obj.output_line
   end
 end

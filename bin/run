@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/ocr_stream_reader'
+require_relative '../lib/ocr_digit_line'
+require_relative '../lib/ocr_digit_line_alternatives'
+
+OcrStreamReader.new($stdin).input_lines.each do |input_line|
+  odl = OcrDigitLine.new(input_line)
+  if ENV['NO_CORRECT'] || odl.valid
+    $stdout.puts odl.output_line
+  else
+    odla = OcrDigitLineAlternatives.new(odl.ocr_digits)
+    $stdout.puts odla.output_line
+  end
+end
